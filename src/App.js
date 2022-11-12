@@ -1,11 +1,5 @@
 import "./App.css";
-import { Route, Switch, Link, useParams, Redirect } from "react-router-dom";
-
-const users = [
-  { name: "User 1", id: 1 },
-  { name: "User 2", id: 2 },
-  { name: "User 3", id: 3 },
-];
+import { Routes, Route, Link, useParams, Navigate } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -69,21 +63,20 @@ const UserEditPage = () => {
       <h3>User ID:{userId}</h3>
     </>
   ) : (
-    <Redirect to={`/users/${userId}`} />
+    <Navigate to={`/users/${userId}`} />
   );
 };
 
 function App() {
   return (
     <>
-      <Switch>
-        <Route path="/users" exact component={UsersListPage} />
-        <Route path="/" exact component={HomePage} />
-        <Route path="/users/:userId" exact component={UserPage} />
-
-        <Route path="/users/:userId/:profile" exact component={UserEditPage} />
-        <Redirect from="/*" to="/" />
-      </Switch>
+      <Routes>
+        <Route path="" element={<HomePage />} />
+        <Route path="users" element={<UsersListPage />} />
+        <Route path="users/:userId" element={<UserPage />} />
+        <Route path="users/:userId/:profile" element={<UserEditPage />} />
+        <Route path="*" element={<Navigate to="" />} />
+      </Routes>
     </>
   );
 }
